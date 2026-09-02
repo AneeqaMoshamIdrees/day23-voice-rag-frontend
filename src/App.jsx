@@ -6,7 +6,7 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import "./App.css";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://resort-mandolin-rebuild.ngrok-free.dev";
 const STORAGE_KEY = "stacks_sessions_v1";
 
 function newId() {
@@ -249,7 +249,7 @@ export default function App() {
 
   async function checkHealth() {
     try {
-      const res = await fetch(API_BASE + "/");
+      const res = await fetch(API_BASE + "/", { headers: { "ngrok-skip-browser-warning": "true" } });
       if (!res.ok) throw new Error();
       setApiOk(true);
       loadDocs();
@@ -260,7 +260,7 @@ export default function App() {
 
   async function loadDocs() {
     try {
-      const res = await fetch(API_BASE + "/api/rag/sources");
+      const res = await fetch(API_BASE + "/api/rag/sources", { headers: { "ngrok-skip-browser-warning": "true" } });
       const data = await res.json();
       setDocs(data.sources || []);
       setTotalChunks(data.total_chunks || 0);
@@ -310,7 +310,7 @@ export default function App() {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const res = await fetch(API_BASE + "/api/rag/ingest", { method: "POST", body: formData });
+      const res = await fetch(API_BASE + "/api/rag/ingest", { method: "POST", headers: { "ngrok-skip-browser-warning": "true" }, body: formData });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "ingest failed");
       setUploadNote({ type: "ok", text: `${data.chunks_added} passages indexed from "${data.filename}".` });
@@ -394,7 +394,7 @@ export default function App() {
       const formData = new FormData();
       formData.append("file", audioFile);
 
-      const res = await fetch(API_BASE + "/api/transcribe", { method: "POST", body: formData });
+      const res = await fetch(API_BASE + "/api/transcribe", { method: "POST", headers: { "ngrok-skip-browser-warning": "true" }, body: formData });
       const data = await res.json();
 
       if (!res.ok) {
@@ -459,7 +459,7 @@ export default function App() {
     try {
       const res = await fetch(API_BASE + "/api/rag/chat/voice", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
         body: JSON.stringify({ session_id: active.id, question }),
       });
 
@@ -644,9 +644,9 @@ export default function App() {
 
     try {
       const res = await fetch(API_BASE + "/api/rag/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: active.id, question }),
+       method: "POST",
+       headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
+       body: JSON.stringify({ session_id: active.id, question }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "chat failed");
@@ -757,9 +757,9 @@ export default function App() {
 
     try {
       const res = await fetch(API_BASE + "/api/rag/chat/stream", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: active.id, question }),
+       method: "POST",
+       headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
+       body: JSON.stringify({ session_id: active.id, question }),
       });
 
       if (!res.ok || !res.body) {

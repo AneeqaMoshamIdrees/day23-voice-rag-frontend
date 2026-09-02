@@ -29,11 +29,11 @@ body{
   display:grid;
   grid-template-columns: 272px 1fr 300px;
   width:100%;
-  height:100vh;
+  height:100vh; height:100dvh;
   overflow:hidden;
 }
 @media (max-width: 980px){
-  .app{ grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; height:100vh; }
+  .app{ grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; height:100vh; height:100dvh; }
   .sidebar, .citations{ max-height:none; }
 }
 
@@ -50,7 +50,7 @@ button{ font-family:'Inter', sans-serif; }
   display:flex;
   flex-direction:column;
   padding:26px 22px;
-  height:100vh;
+  height:100vh; height:100dvh;
   overflow-y:auto;
 }
 .brand{ display:flex; align-items:baseline; gap:8px; margin-bottom:6px; }
@@ -185,7 +185,7 @@ button{ font-family:'Inter', sans-serif; }
   display:flex;
   flex-direction:column;
   min-width:0;
-  height:100vh;
+  height:100vh; height:100dvh;
   overflow:hidden;
 }
 .chat-header{
@@ -336,7 +336,7 @@ button{ font-family:'Inter', sans-serif; }
   background:var(--navy-2);
   border-left:1px solid var(--line-dark);
   padding:26px 20px;
-  height:100vh;
+  height:100vh; height:100dvh;
   overflow-y:auto;
 }
 .citations h3{ font-size:15px; color:var(--paper); margin-bottom:4px; }
